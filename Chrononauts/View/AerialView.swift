@@ -21,16 +21,24 @@ struct AerialView: View {
         self.lat = panorama.latitude
         self.long = panorama.longitude
     }
-    @State var Layers: Array<Layer> = Array<Layer>()
+    @State var Layers: Array<ArcGISMapImageLayer> = Array<ArcGISMapImageLayer>()
     @State var long: Double?
     @State var lat: Double?
     @State static var itemIDs = [
-                                 ["97c32b6e568c4f2986cc1d4bd00d3c09", "2010", "Title"],
                                  ["0580885df74341d5b91aa431c69950ca", "2023", "Raster"],
-                                 ["c7b2cf4fa4cb4df39ebb1a9338ab7229", "2022", "MapService"],
-                                 ["decaa58fb5bf45d588d904a49e7ac1f1", "2019", "MapService"],
-                                 ["eb0d93ab6b3e4c45a479885c90ad5a04", "2011", "MapService"],
-                                 ["97c32b6e568c4f2986cc1d4bd00d3c09", "2010", "MapService"],
+                                 ["https://maps.sbcounty.gov/arcgis/rest/services/Y2022_pua_cache/MapServer", "2022", "URL"],
+                                 ["https://maps.sbcounty.gov/arcgis/rest/services/Y2021_pua_cache/MapServer", "2021", "URL"],
+                                 ["https://maps.sbcounty.gov/arcgis/rest/services/Y2020_pua_cache/MapServer", "2020", "URL"],
+                                 ["https://maps.sbcounty.gov/arcgis/rest/services/Y2019_StatePlane/MapServer", "2019", "URL"],
+                                 ["https://maps.sbcounty.gov/arcgis/rest/services/Y2018_pua_cache/MapServer", "2018", "URL"],
+                                 ["https://maps.sbcounty.gov/arcgis/rest/services/Y2017_pua_cache/MapServer", "2017", "URL"],
+                                 ["https://maps.sbcounty.gov/arcgis/rest/services/Y2016_pua_cache/MapServer", "2016", "URL"],
+                                 ["https://maps.sbcounty.gov/arcgis/rest/services/Y2015_pua_cache/MapServer", "2015", "URL"],
+                                 ["https://maps.sbcounty.gov/arcgis/rest/services/Y2014_pua_cache/MapServer", "2014", "URL"],
+                                 ["https://maps.sbcounty.gov/arcgis/rest/services/Y2013_pua_cache/MapServer", "2013", "URL"],
+                                 ["https://maps.sbcounty.gov/arcgis/rest/services/Y2012_pua_cache/MapServer", "2012", "URL"],
+                                 ["https://maps.sbcounty.gov/arcgis/rest/services/Y2011_pua_cache/MapServer", "2011", "URL"],
+                                 ["https://maps.sbcounty.gov/arcgis/rest/services/Y2010_pua_cache/MapServer", "2010", "URL"],
                                  
     ]
     
@@ -51,20 +59,24 @@ struct AerialView: View {
                         portal: portal,
                         id: PortalItem.ID(item[0])!
                     )
-                    var layer: Layer
                     if item[2] == "Raster" {
-                        layer = RasterLayer(item: portal_item)
+                        let layer = RasterLayer(item: portal_item)
+                        try? await layer.load()
+                        layer.isVisible = false
+                        map.addOperationalLayer(layer)
                     }else if item[2] == "MapService"{
-                        layer = ArcGISMapImageLayer(item: portal_item)
+                        let layer = ArcGISMapImageLayer(item: portal_item)
+                        try? await layer.load()
+                        layer.isVisible = false
+                        map.addOperationalLayer(layer)
                     }else
                     {
-                        layer = ArcGISTiledLayer(item: portal_item)
+                        let layer = ArcGISMapImageLayer(url: URL(string: item[0])!)
+                        try? await layer.load()
                         layer.isVisible = false
+                        map.addOperationalLayer(layer)
                     }
-                    try? await layer.load()
-                    self.Layers.append(layer)
                 }
-                map.addOperationalLayers(self.Layers)
                 try? await map.load()
                 map.operationalLayers[0].isVisible = true
             }
