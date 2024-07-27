@@ -30,7 +30,7 @@ Chrononauts allows users to experience and immerse themselves in historical view
 
 - [x] User can view historical panoramas based on their current location.
 - [x] User can navigate through different time periods to see how locations have changed.
-- [x] User can create new panoramic images and save them for future viewing.
+- [ ] User can create new panoramic images and save them for future viewing.
 - [ ] User can access detailed information about the historical context of the views.
 - [ ] User receives notifications about new or updated panoramic images for their area.
 
@@ -44,10 +44,14 @@ Chrononauts allows users to experience and immerse themselves in historical view
 ### 2. Screen Archetypes
 
 - [x] **Main Screen**
-  * User can view and interact with historical panoramas.
-- [x] **Panorama Creation Screen**
+  * User can view and interact with an interactive map to explore different locations.
+- [x] **Street View Screen**
+  * User can immerse themselves in panoramic street views from various historical dates.
+- [x] **Aerial View Screen**
+  * User can view historical aerial images of their current location, providing a top-down perspective of past maps. 
+- [ ] **Panorama Creation Screen**
   * User can create and save new panoramic images.
-- [x] **Historical View Selection Screen**
+- [ ] **Historical View Selection Screen**
   * User can choose different time periods for viewing historical panoramas.
 - [ ] **Information Screen**
   * User can view detailed information about the historical context of the images.
@@ -57,15 +61,15 @@ Chrononauts allows users to experience and immerse themselves in historical view
 **Tab Navigation** (Tab to Screen)
 
 - [x] **Main Tab**: Main Screen
-- [x] **Create Tab**: Panorama Creation Screen
-- [x] **History Tab**: Historical View Selection Screen
+- [ ] **Create Tab**: Panorama Creation Screen
+- [ ] **History Tab**: Historical View Selection Screen
 - [ ] **Info Tab**: Information Screen
 
 **Flow Navigation** (Screen to Screen)
 
 - [ ] [**Main Screen**]
-  * Leads to [**Panorama Creation Screen**] for creating new panoramas.
-  * Leads to [**Historical View Selection Screen**] for choosing different time periods.
+  * Leads to [**Panoramic View Screen**] where users can immerse themselves in panoramic images.
+  * Leads to [**Aerial View Screen**] where users can view aerial imagery from past dates.
   * Leads to [**Information Screen**] for detailed historical context.
 
 ## Wireframes
