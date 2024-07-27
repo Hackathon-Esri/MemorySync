@@ -13,10 +13,10 @@ struct MapNavigationView: View {
     @StateObject private var panoramaViewModel = PanoramaViewModel()
     @StateObject private var locationManager = LocationManagerShared()
     
-    private static let portal_item = PortalItem(
-        portal: .arcGISOnline(connection: .anonymous),
-        id: Item.ID(rawValue: "fae788aa91e54244b161b59725dcbb2a")!
-    )
+//    private static let portal_item = PortalItem(
+//        portal: .arcGISOnline(connection: .anonymous),
+//        id: Item.ID(rawValue: "fae788aa91e54244b161b59725dcbb2a")!
+//    )
     
     @State private var graphicsOverlay = GraphicsOverlay()
     @State private var map: Map?
@@ -29,7 +29,10 @@ struct MapNavigationView: View {
     
     @State private var selectedPanorama: Panorama?
     @State private var isNavigationActive: Bool = false
-
+    init()
+    {
+        ArcGISEnvironment.apiKey = APIKey("AAPTxy8BH1VEsoebNVZXo8HurHZ1MzVOs8E8fZ2W2I-6tpKGT07I4Jx-83LYrpPSRrhhsNZqPRMKZ1FWNBFyLPJnz90W0tkfMM4abnDWZHZLJiZdmuHq16FR0XaD82cMgZ0ZjwX3EASTFJd5wCBO3Dcw8UjERntMT6_Hg7egEQQvFeNZDpq4xB3KrqIta3BWpnfANSh-BA7Xyj1p1ZNWFjSxbSaZDW5izfg5vmwVNpgA-DP6t0PqcyDFJ1YPC0xHd8YzAT1_tfSbJgDX")
+    }
     var body: some View {
         NavigationView {
             VStack {
@@ -99,13 +102,14 @@ struct MapNavigationView: View {
     }
     
     private func setupMap() {
+        map = Map(basemapStyle: .arcGISLightGray)
         if let location = locationManager.lastLocation {
             let point = Point(
                 x: location.coordinate.longitude,
                 y: location.coordinate.latitude,
                 spatialReference: .wgs84
             )
-            map = Map(item: MapNavigationView.portal_item)
+            //map = Map(item: MapNavigationView.portal_item)
             map?.initialViewpoint = Viewpoint(center: point, scale: 4e4)
         } else {
             // Fallback to a default location if current location is not available
@@ -114,7 +118,6 @@ struct MapNavigationView: View {
                 y: 34.1,
                 spatialReference: .wgs84
             )
-            map = Map(item: MapNavigationView.portal_item)
             map?.initialViewpoint = Viewpoint(center: point, scale: 4e4)
         }
     }
