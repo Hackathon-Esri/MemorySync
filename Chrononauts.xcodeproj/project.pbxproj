@@ -14,6 +14,17 @@
 		11302BAE2C54917400821003 /* ChrononautsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11302BAD2C54917400821003 /* ChrononautsTests.swift */; };
 		11302BB82C54917400821003 /* ChrononautsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11302BB72C54917400821003 /* ChrononautsUITests.swift */; };
 		11302BBA2C54917400821003 /* ChrononautsUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11302BB92C54917400821003 /* ChrononautsUITestsLaunchTests.swift */; };
+		11302BCA2C5491B800821003 /* CurrentLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11302BC92C5491B800821003 /* CurrentLocation.swift */; };
+		11302BCC2C5491C000821003 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11302BCB2C5491C000821003 /* User.swift */; };
+		11302BCE2C5491CA00821003 /* Panorama.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11302BCD2C5491CA00821003 /* Panorama.swift */; };
+		11302BD02C5491DB00821003 /* NavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11302BCF2C5491DB00821003 /* NavigationView.swift */; };
+		11302BD22C5491EB00821003 /* BridgeStreetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11302BD12C5491EB00821003 /* BridgeStreetView.swift */; };
+		11302BD42C54921600821003 /* AerialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11302BD32C54921600821003 /* AerialView.swift */; };
+		11302BD62C54923000821003 /* PanoramaViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11302BD52C54923000821003 /* PanoramaViewModel.swift */; };
+		119957512C549386002A32A2 /* ArcGIS in Frameworks */ = {isa = PBXBuildFile; productRef = 119957502C549386002A32A2 /* ArcGIS */; };
+		119957532C549656002A32A2 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119957522C549656002A32A2 /* LocationManager.swift */; };
+		119957562C54A5AE002A32A2 /* ARStreetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119957552C54A5AE002A32A2 /* ARStreetView.swift */; };
+		119957582C54D09F002A32A2 /* HorizontalPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119957572C54D09F002A32A2 /* HorizontalPickerView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +55,16 @@
 		11302BB32C54917400821003 /* ChrononautsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ChrononautsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		11302BB72C54917400821003 /* ChrononautsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChrononautsUITests.swift; sourceTree = "<group>"; };
 		11302BB92C54917400821003 /* ChrononautsUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChrononautsUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		11302BC92C5491B800821003 /* CurrentLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentLocation.swift; sourceTree = "<group>"; };
+		11302BCB2C5491C000821003 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		11302BCD2C5491CA00821003 /* Panorama.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Panorama.swift; sourceTree = "<group>"; };
+		11302BCF2C5491DB00821003 /* NavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationView.swift; sourceTree = "<group>"; };
+		11302BD12C5491EB00821003 /* BridgeStreetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BridgeStreetView.swift; sourceTree = "<group>"; };
+		11302BD32C54921600821003 /* AerialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AerialView.swift; sourceTree = "<group>"; };
+		11302BD52C54923000821003 /* PanoramaViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanoramaViewModel.swift; sourceTree = "<group>"; };
+		119957522C549656002A32A2 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		119957552C54A5AE002A32A2 /* ARStreetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARStreetView.swift; sourceTree = "<group>"; };
+		119957572C54D09F002A32A2 /* HorizontalPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalPickerView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,6 +72,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				119957512C549386002A32A2 /* ArcGIS in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +100,7 @@
 				11302BAC2C54917400821003 /* ChrononautsTests */,
 				11302BB62C54917400821003 /* ChrononautsUITests */,
 				11302B9A2C54917200821003 /* Products */,
+				1199574F2C549386002A32A2 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -94,6 +117,9 @@
 		11302B9B2C54917200821003 /* Chrononauts */ = {
 			isa = PBXGroup;
 			children = (
+				11302BC82C54919100821003 /* Model */,
+				11302BC72C54918A00821003 /* View */,
+				11302BC62C54918200821003 /* ViewModel */,
 				11302B9C2C54917200821003 /* ChrononautsApp.swift */,
 				11302B9E2C54917200821003 /* ContentView.swift */,
 				11302BA02C54917400821003 /* Assets.xcassets */,
@@ -127,6 +153,52 @@
 			path = ChrononautsUITests;
 			sourceTree = "<group>";
 		};
+		11302BC62C54918200821003 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				11302BD52C54923000821003 /* PanoramaViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		11302BC72C54918A00821003 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				119957542C54A581002A32A2 /* StreetView */,
+				11302BCF2C5491DB00821003 /* NavigationView.swift */,
+				11302BD32C54921600821003 /* AerialView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		11302BC82C54919100821003 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				11302BC92C5491B800821003 /* CurrentLocation.swift */,
+				11302BCB2C5491C000821003 /* User.swift */,
+				11302BCD2C5491CA00821003 /* Panorama.swift */,
+				119957522C549656002A32A2 /* LocationManager.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		1199574F2C549386002A32A2 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		119957542C54A581002A32A2 /* StreetView */ = {
+			isa = PBXGroup;
+			children = (
+				11302BD12C5491EB00821003 /* BridgeStreetView.swift */,
+				119957552C54A5AE002A32A2 /* ARStreetView.swift */,
+				119957572C54D09F002A32A2 /* HorizontalPickerView.swift */,
+			);
+			path = StreetView;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -143,6 +215,9 @@
 			dependencies = (
 			);
 			name = Chrononauts;
+			packageProductDependencies = (
+				119957502C549386002A32A2 /* ArcGIS */,
+			);
 			productName = Chrononauts;
 			productReference = 11302B992C54917200821003 /* Chrononauts.app */;
 			productType = "com.apple.product-type.application";
@@ -215,6 +290,9 @@
 				Base,
 			);
 			mainGroup = 11302B902C54917200821003;
+			packageReferences = (
+				1199574E2C549379002A32A2 /* XCRemoteSwiftPackageReference "arcgis-maps-sdk-swift" */,
+			);
 			productRefGroup = 11302B9A2C54917200821003 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -257,8 +335,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				119957582C54D09F002A32A2 /* HorizontalPickerView.swift in Sources */,
+				11302BCC2C5491C000821003 /* User.swift in Sources */,
+				11302BCA2C5491B800821003 /* CurrentLocation.swift in Sources */,
+				119957532C549656002A32A2 /* LocationManager.swift in Sources */,
 				11302B9F2C54917200821003 /* ContentView.swift in Sources */,
+				11302BD22C5491EB00821003 /* BridgeStreetView.swift in Sources */,
+				11302BD62C54923000821003 /* PanoramaViewModel.swift in Sources */,
+				11302BD42C54921600821003 /* AerialView.swift in Sources */,
+				11302BCE2C5491CA00821003 /* Panorama.swift in Sources */,
+				11302BD02C5491DB00821003 /* NavigationView.swift in Sources */,
 				11302B9D2C54917200821003 /* ChrononautsApp.swift in Sources */,
+				119957562C54A5AE002A32A2 /* ARStreetView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -422,8 +510,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Chrononauts/Preview Content\"";
+				DEVELOPMENT_TEAM = FLFST97F5N;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "We need to access your camera for augmented reality.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need your location to detect nearby buildings";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -450,8 +541,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Chrononauts/Preview Content\"";
+				DEVELOPMENT_TEAM = FLFST97F5N;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "We need to access your camera for augmented reality.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need your location to detect nearby buildings";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -582,6 +676,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		1199574E2C549379002A32A2 /* XCRemoteSwiftPackageReference "arcgis-maps-sdk-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Esri/arcgis-maps-sdk-swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 200.4.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		119957502C549386002A32A2 /* ArcGIS */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1199574E2C549379002A32A2 /* XCRemoteSwiftPackageReference "arcgis-maps-sdk-swift" */;
+			productName = ArcGIS;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 11302B912C54917200821003 /* Project object */;
 }

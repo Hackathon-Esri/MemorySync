@@ -9,9 +9,14 @@ import SwiftUI
 
 @main
 struct ChrononautsApp: App {
+    @StateObject var viewModel = PanoramaViewModel()
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            MapNavigationView()
+                .environmentObject(viewModel)
         }
     }
 }
+
+
