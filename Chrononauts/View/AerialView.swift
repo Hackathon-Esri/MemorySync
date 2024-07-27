@@ -38,7 +38,7 @@ struct AerialView: View {
                                  ["https://maps.sbcounty.gov/arcgis/rest/services/Y2013_pua_cache/MapServer", "2013", "URL"],
                                  ["https://maps.sbcounty.gov/arcgis/rest/services/Y2012_pua_cache/MapServer", "2012", "URL"],
                                  ["https://maps.sbcounty.gov/arcgis/rest/services/Y2011_pua_cache/MapServer", "2011", "URL"],
-                                 ["https://maps.sbcounty.gov/arcgis/rest/services/Y2010_pua_cache/MapServer", "2010", "URL"],
+                                 //["https://maps.sbcounty.gov/arcgis/rest/services/Y2010_pua_cache/MapServer", "2010", "URL"],
                                  
     ]
     
@@ -82,15 +82,31 @@ struct AerialView: View {
             }
             ScrollView(.horizontal, showsIndicators: false)
             {
-                HStack{
-                    ForEach(AerialView.itemIDs.indices, id: \.self) { idx in
-                        Button(action: {
-                            showLayer(index: idx)
-                        })
-                        {
-                            Text(AerialView.itemIDs[idx][1])
-                        }
-                    }
+                ExtractedView(map: map)
+            }
+        }
+    }
+  
+}
+
+#Preview {
+    AerialView()
+}
+
+struct ExtractedView: View {
+    var map:Map
+    var body: some View {
+        HStack{
+            ForEach(AerialView.itemIDs.indices, id: \.self) { idx in
+                Button(action: {
+                    showLayer(index: idx)
+                })
+                {
+                    Text(AerialView.itemIDs[idx][1])
+                        .padding()
+                        .background(Color(uiColor: UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1.0)))
+                        .cornerRadius(5)
+                        .foregroundColor(.black)
                 }
             }
         }
@@ -105,8 +121,4 @@ struct AerialView: View {
             }
         }
     }
-}
-
-#Preview {
-    AerialView()
 }
