@@ -211,19 +211,18 @@ struct MapNavigationView: View {
     
     private func updateGraphicsOverlay() {
         let graphics = panoramaViewModel.panoramas.map { pano in
-            makePictureMarkerSymbolFromImage(x: pano.longitude, y: pano.latitude, id: pano.id)
+            makePictureMarkerSymbolFromImage(x: pano.longitude, y: pano.latitude, id: pano.id, iconName: "panorama_icon")
         }
         graphicsOverlay.addGraphics(graphics)
         
         let userGraphics = panoramaViewModel.userPhotos.map { user in
-            makePictureMarkerSymbolFromImage(x: user.imageLocation?.coordinate.longitude ?? -117.195686, y: user.imageLocation?.coordinate.latitude ?? 34.058955, id: user.id)
+            makePictureMarkerSymbolFromImage(x: user.imageLocation?.coordinate.longitude ?? -117.195686, y: user.imageLocation?.coordinate.latitude ?? 34.058955, id: user.id, iconName: "userPin")
         }
         graphicsOverlay.addGraphics(userGraphics)
     }
     
-    private func makePictureMarkerSymbolFromImage(x: Double, y: Double, id: String) -> Graphic {
-        let imageName = "panorama_icon"
-        let pinSymbol = PictureMarkerSymbol(image: resizeImage(image: UIImage(named: imageName)!, newWidth: 100))
+    private func makePictureMarkerSymbolFromImage(x: Double, y: Double, id: String, iconName: String) -> Graphic {
+        let pinSymbol = PictureMarkerSymbol(image: resizeImage(image: UIImage(named: iconName)!, newWidth: 150))
         let pinPoint = Point(x: x, y: y, spatialReference: .wgs84)
         let attr = ["id": id]
         let pinGraphic = Graphic(geometry: pinPoint, attributes: attr, symbol: pinSymbol)

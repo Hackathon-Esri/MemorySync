@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+
 struct HorizontalPickerView: View {
     var images: [PanoImages]
     var onImageSelected: (Int?) -> Void
@@ -19,19 +20,33 @@ struct HorizontalPickerView: View {
                 HStack(spacing: 15) {
                     ForEach(images.indices, id: \.self) { index in
                         VStack {
+                            Text(images[index].year)
+                                .font(.caption)
+                                .foregroundColor(.white)
+                            
                             Image(uiImage: UIImage(named: "\(images[index].name)")!)
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 100, height: 100)
-                                .clipShape(Circle())
+                                .clipShape(Rectangle())
                                 .overlay(
-                                    Circle()
-                                        .stroke(selectedIndex == index ? Color.green : Color.clear, lineWidth: 3)
+                                    ZStack {
+                                        if selectedIndex == index {
+                                            Rectangle()
+                                                .stroke(Color.green, lineWidth: 3)
+                                                .frame(width: 100, height: 50)
+                                               
+                                            Rectangle()
+                                                .fill(Color.green)
+                                                .frame(width: 2, height: 30)
+                                                .offset(y: -40)
+                                        }
+                                    }
                                 )
                                 .onTapGesture {
                                     if selectedIndex == index {
-//                                        selectedIndex = nil
-//                                        onImageSelected(nil) // Notify that no image is selected
+                                        // selectedIndex = nil
+                                        // onImageSelected(nil) // Notify that no image is selected
                                     } else {
                                         selectedIndex = index
                                         onImageSelected(selectedIndex)
@@ -39,10 +54,6 @@ struct HorizontalPickerView: View {
                                     scrollToSelectedIndex(proxy: proxy)
                                 }
                                 .id(index)
-                            
-                            Text(images[index].year)
-                                .font(.caption)
-                                .foregroundColor(.white)
                         }
                     }
                 }
@@ -59,8 +70,9 @@ struct HorizontalPickerView: View {
                 }
             }
         }
-        .frame(height: 140) // Increased height to accommodate year text
-        
+        .frame(height: 60) // Adjust height if necessary
+        .background(Color.black)
+        .edgesIgnoringSafeArea(.all)
     }
     
     private func scrollToSelectedIndex(proxy: ScrollViewProxy) {

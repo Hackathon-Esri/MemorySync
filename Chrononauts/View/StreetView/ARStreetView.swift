@@ -114,10 +114,19 @@ class ARStreetView: UIViewController, ARSCNViewDelegate, CLLocationManagerDelega
         }))
         
         self.addChild(horizontalPicker)
-        horizontalPicker.view.frame = CGRect(x: 0, y: self.view.frame.height - 150, width: self.view.frame.width, height: 100)
+        horizontalPicker.view.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(horizontalPicker.view)
+        
+        NSLayoutConstraint.activate([
+            horizontalPicker.view.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            horizontalPicker.view.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+            horizontalPicker.view.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
+            horizontalPicker.view.heightAnchor.constraint(equalToConstant: 100)
+        ])
+        
         horizontalPicker.didMove(toParent: self)
     }
+
 
     func startLocationServices() {
         locationManager.delegate = self

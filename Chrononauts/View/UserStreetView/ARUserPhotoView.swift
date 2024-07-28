@@ -132,6 +132,4 @@ class ARUserPhotoView: UIViewController, ARSCNViewDelegate, CLLocationManagerDel
         sceneView.session.run(sceneView.session.configuration!, options: [.resetTracking, .removeExistingAnchors])
     }
     
-            
- 
 }
