@@ -116,7 +116,7 @@ struct ExtractedView: View {
     @State private var bgColors: [Color]
     @State private var intial_index: Int
     init(map: Map, intial_index: Int) {
-        print("Loading map from year: " + AerialView.itemIDs[intial_index][1])
+        print("Loading aerial map from year: " + AerialView.itemIDs[intial_index][1])
         // Initialize bgColor with an array of default colors
         _bgColors = State(initialValue: Array(repeating: Color(red: 0.8, green: 0.8, blue: 0.8), count: AerialView.itemIDs.count))
         
