@@ -10,15 +10,21 @@ import ArcGIS
 import CoreLocation
 
 struct MapNavigationView: View {
+    // camera
+    @State private var showPanoramicCamera = false
+    @State private var capturedImage: UIImage?
+    @State private var panoImageLocation: CLLocation?
     
+    // album
     @State private var showingImagePicker = false
+    @State private var showingCamera = false
     @State private var selectedImage: UIImage?
     @State private var imageCreationDate: Date?
     @State private var imageLocation: CLLocation?
-   
+    
     @StateObject private var panoramaViewModel = PanoramaViewModel()
     @StateObject private var locationManager = LocationManagerShared()
-    
+    // map
     @State private var graphicsOverlay = GraphicsOverlay()
     @State private var map: Map?
     @State private var tapScreenPoint: CGPoint?
@@ -26,8 +32,8 @@ struct MapNavigationView: View {
     @State private var identifyResultMessage = "" {
         didSet { isShowingIdentifyResultAlert = identifyResultMessage.isEmpty }
     }
-    @State private var error: Error?
     
+    @State private var error: Error?
     @State private var selectedPanorama: Panorama?
     @State private var selectedUserPhoto: UserPhoto?
     @State private var isNavigationActive: Bool = false
@@ -70,6 +76,20 @@ struct MapNavigationView: View {
                                     HStack {
                                         Spacer()
                                         VStack {
+                                            
+                                            Button(action: {
+                                                showPanoramicCamera = true
+                                            }) {
+                                                Image(systemName:"camera.circle.fill")
+                                                    .resizable()
+                                                    .foregroundColor(.blue)
+                                                    .aspectRatio(contentMode: .fit)
+                                                    .frame(width: 50, height: 50) // Adjust the size as needed
+                                            }.sheet(isPresented: $showPanoramicCamera) {
+                                                PanoramicCameraView(selectedImage: $selectedImage, imageCreationDate: $imageCreationDate, imageLocation: $imageLocation)
+                                            }
+                                            
+                                            
                                             Button(action: {
                                                 showingImagePicker = true
                                             }) {
@@ -95,7 +115,7 @@ struct MapNavigationView: View {
                                             }
                                         }.padding(.bottom, 50)
                                             .padding()
-                                            
+                                        
                                     }
                                 }
                             )
@@ -139,8 +159,21 @@ struct MapNavigationView: View {
                     clearSelections()
                 }
             }
+            
         }
     }
+    
+    private func saveCapturedImage(image: UIImage, creationDate: Date?, location: CLLocation?) {
+        var userPhoto = UserPhoto(
+            title: "Captured Image",
+            description: "Panoramic image captured on \(creationDate?.description ?? "unknown date")",
+            imageData: image.jpegData(compressionQuality: 1.0),
+            imageLocation: location
+        )
+        panoramaViewModel.addUserPhoto(userPhoto)
+        clearSelections()
+    }
+    
     
     private func setupMap() {
         map = Map(basemapStyle: .arcGISLightGray)
@@ -243,6 +276,7 @@ struct MapNavigationView: View {
         selectedImage = nil
         imageCreationDate = nil
         imageLocation = nil
+        
     }
 }
 
@@ -255,3 +289,5 @@ private extension Collection {
 #Preview {
     MapNavigationView()
 }
+
+

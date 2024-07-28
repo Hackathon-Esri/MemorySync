@@ -27,6 +27,7 @@
 		119957582C54D09F002A32A2 /* HorizontalPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119957572C54D09F002A32A2 /* HorizontalPickerView.swift */; };
 		11D12D8C2C560501002F42C5 /* UserPhotoARView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11D12D8B2C560501002F42C5 /* UserPhotoARView.swift */; };
 		11D12D902C5611A5002F42C5 /* ARUserPhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11D12D8F2C5611A5002F42C5 /* ARUserPhotoView.swift */; };
+		11D12D932C562A50002F42C5 /* PanoramicCameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11D12D922C562A50002F42C5 /* PanoramicCameraView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,6 +70,7 @@
 		119957572C54D09F002A32A2 /* HorizontalPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalPickerView.swift; sourceTree = "<group>"; };
 		11D12D8B2C560501002F42C5 /* UserPhotoARView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPhotoARView.swift; sourceTree = "<group>"; };
 		11D12D8F2C5611A5002F42C5 /* ARUserPhotoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARUserPhotoView.swift; sourceTree = "<group>"; };
+		11D12D922C562A50002F42C5 /* PanoramicCameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanoramicCameraView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -168,6 +170,7 @@
 		11302BC72C54918A00821003 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				11D12D912C562A27002F42C5 /* PanoramicCamera */,
 				11D12D8A2C5604DB002F42C5 /* UserStreetView */,
 				119957542C54A581002A32A2 /* StreetView */,
 				11302BCF2C5491DB00821003 /* NavigationView.swift */,
@@ -211,6 +214,14 @@
 				11D12D8F2C5611A5002F42C5 /* ARUserPhotoView.swift */,
 			);
 			path = UserStreetView;
+			sourceTree = "<group>";
+		};
+		11D12D912C562A27002F42C5 /* PanoramicCamera */ = {
+			isa = PBXGroup;
+			children = (
+				11D12D922C562A50002F42C5 /* PanoramicCameraView.swift */,
+			);
+			path = PanoramicCamera;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -360,6 +371,7 @@
 				11302BD42C54921600821003 /* AerialView.swift in Sources */,
 				11302BCE2C5491CA00821003 /* Panorama.swift in Sources */,
 				11302BD02C5491DB00821003 /* NavigationView.swift in Sources */,
+				11D12D932C562A50002F42C5 /* PanoramicCameraView.swift in Sources */,
 				11302B9D2C54917200821003 /* ChrononautsApp.swift in Sources */,
 				119957562C54A5AE002A32A2 /* ARStreetView.swift in Sources */,
 				11D12D8C2C560501002F42C5 /* UserPhotoARView.swift in Sources */,
@@ -530,6 +542,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "We need to access your camera for augmented reality.";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "We need your location to track your routes even when the app is in the background.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need your location to detect nearby buildings";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need access to your photo library to allow you to select photos";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -562,6 +575,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "We need to access your camera for augmented reality.";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "We need your location to track your routes even when the app is in the background.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need your location to detect nearby buildings";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need access to your photo library to allow you to select photos";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
