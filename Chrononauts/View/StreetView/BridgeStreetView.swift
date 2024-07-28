@@ -33,10 +33,10 @@ struct BridgeStreetView: View {
             id: "sample_id",
             name: "esri1",
             panoImages: [
-                PanoImages(name: "esricoffee", year: "2007"),
-                PanoImages(name: "esricoffee", year: "2011"),
-                PanoImages(name: "esricoffee", year: "2017"),
-                PanoImages(name: "esricoffee", year: "2019")
+                PanoImages(name: "esricoffee", year: "2007", north_rotation: 0),
+                PanoImages(name: "esricoffee", year: "2011", north_rotation: 0),
+                PanoImages(name: "esricoffee", year: "2017", north_rotation: 0),
+                PanoImages(name: "esricoffee", year: "2019", north_rotation: 0)
             ],
             latitude: 34.0,
             longitude: -117.0

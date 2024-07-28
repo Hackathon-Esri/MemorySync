@@ -18,4 +18,5 @@ struct Panorama: Identifiable, Codable, Equatable {
 struct PanoImages: Codable, Equatable{
     var name:String
     var year:String
+    var north_rotation:Int
 }
