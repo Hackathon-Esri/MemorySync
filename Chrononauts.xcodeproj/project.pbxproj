@@ -21,11 +21,11 @@
 		11302BD22C5491EB00821003 /* BridgeStreetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11302BD12C5491EB00821003 /* BridgeStreetView.swift */; };
 		11302BD42C54921600821003 /* AerialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11302BD32C54921600821003 /* AerialView.swift */; };
 		11302BD62C54923000821003 /* PanoramaViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11302BD52C54923000821003 /* PanoramaViewModel.swift */; };
-		119957512C549386002A32A2 /* ArcGIS in Frameworks */ = {isa = PBXBuildFile; productRef = 119957502C549386002A32A2 /* ArcGIS */; };
 		119957532C549656002A32A2 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119957522C549656002A32A2 /* LocationManager.swift */; };
 		119957562C54A5AE002A32A2 /* ARStreetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119957552C54A5AE002A32A2 /* ARStreetView.swift */; };
 		119957582C54D09F002A32A2 /* HorizontalPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119957572C54D09F002A32A2 /* HorizontalPickerView.swift */; };
 		119CCC2C2C56A69400F8CBCC /* FunFactsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119CCC2B2C56A69400F8CBCC /* FunFactsView.swift */; };
+		119CCC312C56C07B00F8CBCC /* ArcGIS in Frameworks */ = {isa = PBXBuildFile; productRef = 119CCC302C56C07B00F8CBCC /* ArcGIS */; };
 		11D12D8C2C560501002F42C5 /* UserPhotoARView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11D12D8B2C560501002F42C5 /* UserPhotoARView.swift */; };
 		11D12D902C5611A5002F42C5 /* ARUserPhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11D12D8F2C5611A5002F42C5 /* ARUserPhotoView.swift */; };
 		11D12D932C562A50002F42C5 /* PanoramicCameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11D12D922C562A50002F42C5 /* PanoramicCameraView.swift */; };
@@ -80,7 +80,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				119957512C549386002A32A2 /* ArcGIS in Frameworks */,
+				119CCC312C56C07B00F8CBCC /* ArcGIS in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -252,7 +252,7 @@
 			);
 			name = Chrononauts;
 			packageProductDependencies = (
-				119957502C549386002A32A2 /* ArcGIS */,
+				119CCC302C56C07B00F8CBCC /* ArcGIS */,
 			);
 			productName = Chrononauts;
 			productReference = 11302B992C54917200821003 /* Chrononauts.app */;
@@ -733,7 +733,7 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		119957502C549386002A32A2 /* ArcGIS */ = {
+		119CCC302C56C07B00F8CBCC /* ArcGIS */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 1199574E2C549379002A32A2 /* XCRemoteSwiftPackageReference "arcgis-maps-sdk-swift" */;
 			productName = ArcGIS;

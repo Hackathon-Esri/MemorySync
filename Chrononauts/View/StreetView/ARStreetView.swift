@@ -38,7 +38,11 @@ class ARStreetView: UIViewController, ARSCNViewDelegate, CLLocationManagerDelega
         configureARSession()
         addHorizontalPicker()
         addMapIconButton()
-        addFunFacts()
+        
+        if panorama.name == "Esri"{
+            addFunFacts()
+        }
+        
         self.replaceBuildingWithPhoto(identifier: images.first)
     }
 
