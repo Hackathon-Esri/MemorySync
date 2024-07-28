@@ -14,8 +14,8 @@ class ARStreetView: UIViewController, ARSCNViewDelegate, CLLocationManagerDelega
     var sceneView: ARSCNView!
     let locationManager = CLLocationManager()
     var currentLocation: CLLocation?
+    var currentHeading: CLHeading?
     var panorama: Panorama // Single panorama instance
-    
     var images: [PanoImages] {
         return panorama.panoImages
     }
@@ -37,6 +37,7 @@ class ARStreetView: UIViewController, ARSCNViewDelegate, CLLocationManagerDelega
         configureARSession()
         addHorizontalPicker()
         addMapIconButton()
+        self.replaceBuildingWithPhoto(identifier: images.first)
     }
 
     func addMapIconButton() {
@@ -77,7 +78,7 @@ class ARStreetView: UIViewController, ARSCNViewDelegate, CLLocationManagerDelega
     
     func addHorizontalPicker() {
         let horizontalPicker = UIHostingController(rootView: HorizontalPickerView(images: images, onImageSelected: { image in
-            self.replaceBuildingWithPhoto(identifier: image?.name)
+            self.replaceBuildingWithPhoto(identifier: image)
         }))
         
         self.addChild(horizontalPicker)
@@ -92,6 +93,7 @@ class ARStreetView: UIViewController, ARSCNViewDelegate, CLLocationManagerDelega
         
         if CLLocationManager.authorizationStatus() == .authorizedWhenInUse || CLLocationManager.authorizationStatus() == .authorizedAlways {
             locationManager.startUpdatingLocation()
+            locationManager.startUpdatingHeading()
         } else {
             print("Location services not authorized")
         }
@@ -104,12 +106,17 @@ class ARStreetView: UIViewController, ARSCNViewDelegate, CLLocationManagerDelega
         
         let configuration = ARWorldTrackingConfiguration()
         configuration.planeDetection = [.horizontal, .vertical]
+        
         sceneView.session.run(configuration)
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
         currentLocation = location
+    }
+    func locationManager(_ manager: CLLocationManager, didUpdateHeading heading: CLHeading) {
+        //guard let heading = heading else { return }
+        currentHeading = heading
     }
     
     func removePanoramicImageNode() {
@@ -118,14 +125,16 @@ class ARStreetView: UIViewController, ARSCNViewDelegate, CLLocationManagerDelega
         }
     }
     
-    func replaceBuildingWithPhoto(identifier: String?) {
+    func replaceBuildingWithPhoto(identifier: PanoImages?) {
         DispatchQueue.global(qos: .userInitiated).async {
-            if let identifier = identifier, let originalImage = UIImage(named: identifier) {
+            if let identifier = identifier, let originalImage = UIImage(named: identifier.name) {
                 guard let mirroredImage = self.mirrorImage(originalImage) else { return }
 
-                DispatchQueue.main.async {
+                DispatchQueue.main.async { [self] in
                     // Remove all existing panoramic image nodes
                     self.removePanoramicImageNode()
+                    sceneView.scene = SCNScene()
+                    //sceneView.scene.
                     
                     // Add the new panoramic image node
                     let sphere = SCNSphere(radius: 10)
@@ -133,9 +142,24 @@ class ARStreetView: UIViewController, ARSCNViewDelegate, CLLocationManagerDelega
                     sphereMaterial.diffuse.contents = mirroredImage
                     sphereMaterial.isDoubleSided = true
                     sphere.materials = [sphereMaterial]
-
+                    
                     let sphereNode = SCNNode(geometry: sphere)
                     sphereNode.position = SCNVector3(0, 0, 0)
+                    
+//                    var offsetAngle = currentHeading!.trueHeading - 180
+//                    var offsetRad = Float(offsetAngle) * Float.pi/180
+//                    
+//                    print(currentHeading!.trueHeading)
+//                    print(offsetAngle)
+//                    print(offsetRad)
+//                    
+
+                    var north_rotation = (Float(identifier.north_rotation) + Float(currentHeading!.trueHeading))  * Float.pi/180
+                    //sphereNode.rotation = SCNVector4(0,1,0, offsetRad)
+                    sphereNode.rotation = SCNVector4(0,1,0, north_rotation)
+                    //}
+                
+                    //sphereNode.rotation = SCNVector4(0,0,1, 45)
                     sphereNode.name = "panoramicImage"
                     self.sceneView.scene.rootNode.addChildNode(sphereNode)
                 }

@@ -9,18 +9,12 @@ import SwiftUI
 import ArcGIS
 
 struct AerialView: View {
-    init()
-    {
-    }
-    init(long:Double, lat: Double) async
-    {
-        self.long = long
-        self.lat = lat
-    }
-    init(panorama: Panorama){
-        self.lat = panorama.latitude
-        self.long = panorama.longitude
-    }
+    var panorama: Panorama
+
+//    init(panorama: Panorama){
+//        self.lat = panorama.latitude
+//        self.long = panorama.longitude
+//    }
     @State var Layers: Array<ArcGISMapImageLayer> = Array<ArcGISMapImageLayer>()
     @State var long: Double?
     @State var lat: Double?
@@ -49,8 +43,8 @@ struct AerialView: View {
     var body: some View {
         VStack{
             MapView(map: map).task {
-                map.initialViewpoint = Viewpoint(center:Point(x: self.long ?? -117.19492634116482,
-                                                              y: self.lat ?? 34.05714608430707,
+                map.initialViewpoint = Viewpoint(center:Point(x: self.panorama.longitude,
+                                                              y: self.panorama.latitude,
                                                               spatialReference: .wgs84),
                                                  scale: 1000)
                 let portal = Portal(url: URL(string: "https://sbcounty.maps.arcgis.com")!, connection:.anonymous)
@@ -89,9 +83,9 @@ struct AerialView: View {
   
 }
 
-#Preview {
-    AerialView()
-}
+//#Preview {
+//    AerialView(panorama: Panorama(from: <#any Decoder#>))
+//}
 
 struct ExtractedView: View {
     var map:Map

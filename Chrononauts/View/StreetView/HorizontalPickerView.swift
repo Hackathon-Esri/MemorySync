@@ -30,8 +30,8 @@ struct HorizontalPickerView: View {
                                 )
                                 .onTapGesture {
                                     if selectedIndex == index {
-                                        selectedIndex = nil
-                                        onImageSelected(nil) // Notify that no image is selected
+//                                        selectedIndex = nil
+//                                        onImageSelected(nil) // Notify that no image is selected
                                     } else {
                                         selectedIndex = index
                                         onImageSelected(images[index])
@@ -50,6 +50,7 @@ struct HorizontalPickerView: View {
                 .onAppear {
                     scrollViewProxy = proxy
                     scrollToSelectedIndex(proxy: proxy)
+                    selectedIndex = 0
                 }
                 .onChange(of: selectedIndex) { _ in
                     if let proxy = scrollViewProxy {
