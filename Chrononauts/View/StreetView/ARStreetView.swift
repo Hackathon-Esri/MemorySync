@@ -41,13 +41,43 @@ class ARStreetView: UIViewController, ARSCNViewDelegate, CLLocationManagerDelega
         self.replaceBuildingWithPhoto(identifier: images.first)
     }
 
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        cleanupARResources()
+    }
+    func cleanupARResources() {
+        // Pause the AR session
+        sceneView.session.pause()
+        
+        // Remove all nodes
+        sceneView.scene.rootNode.childNodes.forEach { $0.removeFromParentNode() }
+        
+        // Stop location updates
+        locationManager.stopUpdatingLocation()
+        locationManager.stopUpdatingHeading()
+        
+        // Clear the delegate to avoid potential memory leaks
+        sceneView.delegate = nil
+        sceneView.session.delegate = nil
+        locationManager.delegate = nil
+    }
+
+
+    
     func addMapIconButton() {
         let mapIconButton = UIButton(type: .system)
         mapIconButton.setImage(UIImage(systemName: "map"), for: .normal)
         mapIconButton.tintColor = .black
         mapIconButton.addTarget(self, action: #selector(showAerialView), for: .touchUpInside)
         
-        mapIconButton.frame = CGRect(x: self.view.frame.width - 80, y: 40, width: 100, height: 100)
+        // Adjusting the frame to make the button bigger
+        mapIconButton.tintColor = .systemBlue
+        mapIconButton.frame = CGRect(x: self.view.frame.width - 85, y: 40, width: 100, height: 100)
+        
+        // Ensuring the icon scales appropriately within the button
+        mapIconButton.imageView?.contentMode = .scaleAspectFit
+        mapIconButton.imageEdgeInsets = UIEdgeInsets(top: 30, left: 30, bottom: 30, right: 30)
+        
         self.view.addSubview(mapIconButton)
         
         print("Map icon button added")

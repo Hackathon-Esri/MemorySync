@@ -60,6 +60,7 @@ struct HorizontalPickerView: View {
             }
         }
         .frame(height: 140) // Increased height to accommodate year text
+        
     }
     
     private func scrollToSelectedIndex(proxy: ScrollViewProxy) {

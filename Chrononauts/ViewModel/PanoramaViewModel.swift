@@ -10,10 +10,15 @@ import Combine
 
 class PanoramaViewModel: ObservableObject {
     @Published var panoramas: [Panorama] = []
+    @Published var userPhotos: [UserPhoto] = []
+    private let userPhotosFilename = "userPhotos.json"
+    private let fileManager = FileManager.default
     
     init() {
         loadMockData()
+        loadUserPhotos()
     }
+    
 //    {"id": "1", "name": "msla", "panoImages": [{"name": "msla2011", "year": "2011", "north_rotation": 0}, {"name": "msla2015", "year": "2015", "north_rotation": 0}, {"name": "msla2020", "year": "2020", "north_rotation": 0}], "latitude": 34.0578832, "longitude": -117.195714},
 //    {"id": "2", "name": "esri", "panoImages": [{"name": "esri2007", "year": "2007", "north_rotation": 0}, {"name": "esri2011", "year": "2011", "north_rotation": 0}, {"name": "esri2016", "year": "2016", "north_rotation": 0},{"name": "esri2022", "year": "2022", "north_rotation": 0}], "latitude": 34.0568832, "longitude": -117.196714},
     private func loadMockData() {
@@ -30,5 +35,37 @@ class PanoramaViewModel: ObservableObject {
         if let panorama = try? decoder.decode([Panorama].self, from: data) {
             self.panoramas = panorama
         }
+    }
+    
+    func addUserPhoto(_ userPhoto: UserPhoto) {
+        userPhotos.append(userPhoto)
+        saveUserPhotos()
+    }
+    
+    private func saveUserPhotos() {
+        guard let url = getDocumentsDirectory()?.appendingPathComponent(userPhotosFilename) else { return }
+        
+        do {
+            let data = try JSONEncoder().encode(userPhotos)
+            try data.write(to: url)
+        } catch {
+            print("Failed to save user photos: \(error.localizedDescription)")
+        }
+    }
+    
+    private func loadUserPhotos() {
+        guard let url = getDocumentsDirectory()?.appendingPathComponent(userPhotosFilename),
+              fileManager.fileExists(atPath: url.path) else { return }
+        
+        do {
+            let data = try Data(contentsOf: url)
+            userPhotos = try JSONDecoder().decode([UserPhoto].self, from: data)
+        } catch {
+            print("Failed to load user photos: \(error.localizedDescription)")
+        }
+    }
+    
+    private func getDocumentsDirectory() -> URL? {
+        return fileManager.urls(for: .documentDirectory, in: .userDomainMask).first
     }
 }

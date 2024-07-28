@@ -10,13 +10,14 @@ import ArcGIS
 import CoreLocation
 
 struct MapNavigationView: View {
+    
+    @State private var showingImagePicker = false
+    @State private var selectedImage: UIImage?
+    @State private var imageCreationDate: Date?
+    @State private var imageLocation: CLLocation?
+   
     @StateObject private var panoramaViewModel = PanoramaViewModel()
     @StateObject private var locationManager = LocationManagerShared()
-    
-//    private static let portal_item = PortalItem(
-//        portal: .arcGISOnline(connection: .anonymous),
-//        id: Item.ID(rawValue: "fae788aa91e54244b161b59725dcbb2a")!
-//    )
     
     @State private var graphicsOverlay = GraphicsOverlay()
     @State private var map: Map?
@@ -28,11 +29,13 @@ struct MapNavigationView: View {
     @State private var error: Error?
     
     @State private var selectedPanorama: Panorama?
+    @State private var selectedUserPhoto: UserPhoto?
     @State private var isNavigationActive: Bool = false
-    init()
-    {
+    
+    init() {
         ArcGISEnvironment.apiKey = APIKey("AAPTxy8BH1VEsoebNVZXo8HurHZ1MzVOs8E8fZ2W2I-6tpKGT07I4Jx-83LYrpPSRrhhsNZqPRMKZ1FWNBFyLPJnz90W0tkfMM4abnDWZHZLJiZdmuHq16FR0XaD82cMgZ0ZjwX3EASTFJd5wCBO3Dcw8UjERntMT6_Hg7egEQQvFeNZDpq4xB3KrqIta3BWpnfANSh-BA7Xyj1p1ZNWFjSxbSaZDW5izfg5vmwVNpgA-DP6t0PqcyDFJ1YPC0xHd8YzAT1_tfSbJgDX")
     }
+    
     var body: some View {
         NavigationView {
             VStack {
@@ -58,24 +61,41 @@ struct MapNavigationView: View {
                             .onChange(of: panoramaViewModel.panoramas) { _ in
                                 updateGraphicsOverlay()
                             }
+                            .onChange(of: panoramaViewModel.userPhotos) { _ in
+                                updateGraphicsOverlay()
+                            }
                             .overlay(
                                 VStack {
                                     Spacer()
                                     HStack {
                                         Spacer()
-                                        Button(action: {
-                                            Task {
-                                                await goToCurrentLocation(mapViewProxy: mapViewProxy)
+                                        VStack {
+                                            Button(action: {
+                                                showingImagePicker = true
+                                            }) {
+                                                Image(systemName:"person.2.crop.square.stack.fill")
+                                                    .resizable()
+                                                    .foregroundColor(.blue)
+                                                    .aspectRatio(contentMode: .fit)
+                                                    .frame(width: 50, height: 50) // Adjust the size as needed
                                             }
-                                        }) {
-                                            Image(systemName: "location.circle.fill")
-                                                .resizable()
-                                                .frame(width: 40, height: 40)
-                                                .foregroundColor(.blue)
-                                                .padding()
-                                                .padding(.bottom)
+                                            .sheet(isPresented: $showingImagePicker) {
+                                                ImagePicker(selectedImage: $selectedImage, imageCreationDate: $imageCreationDate, imageLocation: $imageLocation)
+                                            }
                                             
-                                        }
+                                            Button(action: {
+                                                Task {
+                                                    await goToCurrentLocation(mapViewProxy: mapViewProxy)
+                                                }
+                                            }) {
+                                                Image(systemName: "location.circle.fill")
+                                                    .resizable()
+                                                    .frame(width: 40, height: 40)
+                                                    .foregroundColor(.blue)
+                                            }
+                                        }.padding(.bottom, 50)
+                                            .padding()
+                                            
                                     }
                                 }
                             )
@@ -86,18 +106,39 @@ struct MapNavigationView: View {
                             setupMap()
                         }
                 }
-            }
-            .background(
-                NavigationLink(
-                    destination: selectedPanorama.map { panorama in
-                        BridgeStreetView(panorama: panorama)
-                    },
-                    isActive: $isNavigationActive
-                ) {
-                    EmptyView()
+            }.background(
+                Group {
+                    if let selectedPanorama = selectedPanorama {
+                        NavigationLink(
+                            destination: BridgeStreetView(panorama: selectedPanorama),
+                            isActive: $isNavigationActive
+                        ) {
+                            EmptyView()
+                        }
+                        .hidden()
+                    }
+                    
+                    if let selectedUserPhoto = selectedUserPhoto {
+                        NavigationLink(
+                            destination: UserPhotoARView(userPhoto: selectedUserPhoto),
+                            isActive: $isNavigationActive
+                        ) {
+                            EmptyView()
+                        }
+                        .hidden()
+                    }
                 }
-                .hidden()
-            )
+            ).onChange(of: selectedImage) { newImage in
+                if let newImage = newImage {
+                    var userPhoto = UserPhoto(
+                        title: "Photo",
+                        description: "Description"
+                    )
+                    userPhoto.set(newImage, with: imageLocation)
+                    panoramaViewModel.addUserPhoto(userPhoto)
+                    clearSelections()
+                }
+            }
         }
     }
     
@@ -109,7 +150,6 @@ struct MapNavigationView: View {
                 y: location.coordinate.latitude,
                 spatialReference: .wgs84
             )
-            //map = Map(item: MapNavigationView.portal_item)
             map?.initialViewpoint = Viewpoint(center: point, scale: 4e4)
         } else {
             // Fallback to a default location if current location is not available
@@ -139,6 +179,11 @@ struct MapNavigationView: View {
                 if let panorama = panoramaViewModel.panoramas.first(where: { $0.id == id }) {
                     selectedPanorama = panorama
                     isNavigationActive = true // Trigger the navigation
+                    selectedUserPhoto = nil // Clear the other selection
+                } else if let userPhoto = panoramaViewModel.userPhotos.first(where: { $0.id == id }) {
+                    selectedUserPhoto = userPhoto
+                    isNavigationActive = true // Trigger the navigation
+                    selectedPanorama = nil // Clear the other selection
                 }
             }
         } catch {
@@ -169,6 +214,11 @@ struct MapNavigationView: View {
             makePictureMarkerSymbolFromImage(x: pano.longitude, y: pano.latitude, id: pano.id)
         }
         graphicsOverlay.addGraphics(graphics)
+        
+        let userGraphics = panoramaViewModel.userPhotos.map { user in
+            makePictureMarkerSymbolFromImage(x: user.imageLocation?.coordinate.longitude ?? -117.195686, y: user.imageLocation?.coordinate.latitude ?? 34.058955, id: user.id)
+        }
+        graphicsOverlay.addGraphics(userGraphics)
     }
     
     private func makePictureMarkerSymbolFromImage(x: Double, y: Double, id: String) -> Graphic {
@@ -189,10 +239,15 @@ struct MapNavigationView: View {
         UIGraphicsEndImageContext()
         return newImage!
     }
+    
+    private func clearSelections() {
+        selectedImage = nil
+        imageCreationDate = nil
+        imageLocation = nil
+    }
 }
 
 private extension Collection {
-    /// A Boolean value indicating whether the collection is not empty.
     var isNotEmpty: Bool {
         !self.isEmpty
     }
