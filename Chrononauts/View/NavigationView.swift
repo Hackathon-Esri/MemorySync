@@ -176,7 +176,7 @@ struct MapNavigationView: View {
     
     
     private func setupMap() {
-        map = Map(basemapStyle: .arcGISLightGray)
+        map = Map(basemapStyle: .arcGISCommunity)
         if let location = locationManager.lastLocation {
             let point = Point(
                 x: location.coordinate.longitude,
@@ -187,8 +187,8 @@ struct MapNavigationView: View {
         } else {
             // Fallback to a default location if current location is not available
             let point = Point(
-                x: -117.15,
-                y: 34.1,
+                x: -117.1957212,
+                y: 34.0570921,
                 spatialReference: .wgs84
             )
             map?.initialViewpoint = Viewpoint(center: point, scale: 4e4)
