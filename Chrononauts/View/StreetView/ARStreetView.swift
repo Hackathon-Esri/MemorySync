@@ -68,22 +68,31 @@ class ARStreetView: UIViewController, ARSCNViewDelegate, CLLocationManagerDelega
     }
 
 
-    
     func addMapIconButton() {
         let mapIconButton = UIButton(type: .system)
-        mapIconButton.setImage(UIImage(systemName: "map"), for: .normal)
-        mapIconButton.tintColor = .black
-        mapIconButton.addTarget(self, action: #selector(showAerialView), for: .touchUpInside)
-        
-        // Adjusting the frame to make the button bigger
+        mapIconButton.setImage(UIImage(systemName: "map.circle.fill"), for: .normal)
         mapIconButton.tintColor = .systemBlue
-        mapIconButton.frame = CGRect(x: self.view.frame.width - 85, y: 40, width: 100, height: 100)
+        mapIconButton.addTarget(self, action: #selector(showAerialView), for: .touchUpInside)
         
         // Ensuring the icon scales appropriately within the button
         mapIconButton.imageView?.contentMode = .scaleAspectFit
         mapIconButton.imageEdgeInsets = UIEdgeInsets(top: 30, left: 30, bottom: 30, right: 30)
         
+        // Add the button to the view hierarchy
         self.view.addSubview(mapIconButton)
+        
+        // Disable autoresizing mask translation to use Auto Layout
+        mapIconButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        // Set up constraints
+        NSLayoutConstraint.activate([
+            mapIconButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -50),
+            mapIconButton.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: 50),
+            
+            // Set button size
+            mapIconButton.widthAnchor.constraint(equalToConstant: 150),
+            mapIconButton.heightAnchor.constraint(equalToConstant: 150)
+        ])
         
         print("Map icon button added")
     }
