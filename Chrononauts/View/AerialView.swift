@@ -10,7 +10,10 @@ import ArcGIS
 
 struct AerialView: View {
     var panorama: Panorama
-
+    var currentIndex: Int
+    
+    
+    //@State private var nearestIndex: Int
 //    init(panorama: Panorama){
 //        self.lat = panorama.latitude
 //        self.long = panorama.longitude
@@ -48,46 +51,80 @@ struct AerialView: View {
                                                               spatialReference: .wgs84),
                                                  scale: 1000)
                 let portal = Portal(url: URL(string: "https://sbcounty.maps.arcgis.com")!, connection:.anonymous)
-                for item in AerialView.itemIDs{
+                let nearestIndex = getNearestIndex()
+                for idx in 0 ..< AerialView.itemIDs.count{
                     let portal_item = PortalItem(
                         portal: portal,
-                        id: PortalItem.ID(item[0])!
+                        id: PortalItem.ID(AerialView.itemIDs[idx][0])!
                     )
-                    if item[2] == "Raster" {
+                    if AerialView.itemIDs[idx][2] == "Raster" {
                         let layer = RasterLayer(item: portal_item)
                         try? await layer.load()
-                        layer.isVisible = false
+                        if nearestIndex != idx{
+                            layer.isVisible = false
+                        }
                         map.addOperationalLayer(layer)
-                    }else if item[2] == "MapService"{
+                    }else if AerialView.itemIDs[idx][2] == "MapService"{
                         let layer = ArcGISMapImageLayer(item: portal_item)
                         try? await layer.load()
-                        layer.isVisible = false
+                        if nearestIndex != idx{
+                            layer.isVisible = false
+                        }
                         map.addOperationalLayer(layer)
                     }else
                     {
-                        let layer = ArcGISMapImageLayer(url: URL(string: item[0])!)
+                        let layer = ArcGISMapImageLayer(url: URL(string: AerialView.itemIDs[idx][0])!)
                         try? await layer.load()
-                        layer.isVisible = false
+                        if nearestIndex != idx{
+                            layer.isVisible = false
+                        }
+                        try? await layer.load()
                         map.addOperationalLayer(layer)
                     }
                 }
                 try? await map.load()
-                map.operationalLayers[0].isVisible = true
             }
             ScrollView(.horizontal, showsIndicators: false)
             {
-                ExtractedView(map: map)
+                let nearestIndex = getNearestIndex()
+                ExtractedView(map: map, intial_index: nearestIndex)
             }
         }
+    }
+    private func getNearestIndex() -> Int
+    {
+        let arYear = Int(self.panorama.panoImages[self.currentIndex].year)!
+        var minDiff = Int.max
+        var targetYearIndex = 0
+        for i in 0..<AerialView.itemIDs.count {
+            let year = Int(AerialView.itemIDs[i][1])!
+            if abs(year - arYear) < minDiff {
+                targetYearIndex = i
+                minDiff = abs(year - arYear)
+            }
+        }
+        return targetYearIndex
     }
   
 }
 
-//#Preview {
-//    AerialView(panorama: Panorama(from: <#any Decoder#>))
-//}
+#Preview {
+    AerialView(panorama: PanoramaViewModel().panoramas[0], currentIndex: 2)
+}
 
 struct ExtractedView: View {
+    @State private var bgColors: [Color]
+    @State private var intial_index: Int
+    init(map: Map, intial_index: Int) {
+        print("Loading map from year: " + AerialView.itemIDs[intial_index][1])
+        // Initialize bgColor with an array of default colors
+        _bgColors = State(initialValue: Array(repeating: Color(red: 0.8, green: 0.8, blue: 0.8), count: AerialView.itemIDs.count))
+        
+        self.map = map
+        self.intial_index = intial_index
+        
+    }
+    
     var map:Map
     var body: some View {
         HStack{
@@ -98,21 +135,27 @@ struct ExtractedView: View {
                 {
                     Text(AerialView.itemIDs[idx][1])
                         .padding()
-                        .background(Color(uiColor: UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1.0)))
+                        .background(bgColors[idx])
                         .cornerRadius(5)
                         .foregroundColor(.black)
+                    
                 }
             }
+        }.task {
+            bgColors[self.intial_index] = .blue
         }
     }
     private func showLayer(index: Int)
     {
         for i in 0..<map.operationalLayers.count {
             if i == index{
+                bgColors[index] = .blue
                 map.operationalLayers[i].isVisible = true
             }else{
+                bgColors[i] = Color(red: 0.8, green: 0.8, blue: 0.8)
                 map.operationalLayers[i].isVisible = false
             }
         }
+        
     }
 }

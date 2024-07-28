@@ -19,6 +19,7 @@ class ARStreetView: UIViewController, ARSCNViewDelegate, CLLocationManagerDelega
     var images: [PanoImages] {
         return panorama.panoImages
     }
+    var currentImageIndex:Int = 0
     
     init(panorama: Panorama) {
         self.panorama = panorama
@@ -55,7 +56,7 @@ class ARStreetView: UIViewController, ARSCNViewDelegate, CLLocationManagerDelega
         
     @objc func showAerialView() {
         print("Map icon button pressed")
-        let aerialView = AerialView(panorama: panorama)
+        let aerialView = AerialView(panorama: panorama, currentIndex: self.currentImageIndex)
         let hostingController = UIHostingController(rootView: aerialView)
         
         // Check if self.navigationController is not nil
@@ -77,8 +78,9 @@ class ARStreetView: UIViewController, ARSCNViewDelegate, CLLocationManagerDelega
     }
     
     func addHorizontalPicker() {
-        let horizontalPicker = UIHostingController(rootView: HorizontalPickerView(images: images, onImageSelected: { image in
-            self.replaceBuildingWithPhoto(identifier: image)
+        let horizontalPicker = UIHostingController(rootView: HorizontalPickerView(images: images, onImageSelected: { index in
+            self.currentImageIndex = index!
+            self.replaceBuildingWithPhoto(identifier: self.images[index!])
         }))
         
         self.addChild(horizontalPicker)
