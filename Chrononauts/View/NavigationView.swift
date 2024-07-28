@@ -249,7 +249,7 @@ struct MapNavigationView: View {
         graphicsOverlay.addGraphics(graphics)
         
         let userGraphics = panoramaViewModel.userPhotos.map { user in
-            makePictureMarkerSymbolFromImage(x: user.imageLocation?.coordinate.longitude ?? -117.195686, y: user.imageLocation?.coordinate.latitude ?? 34.058955, id: user.id, iconName: "userPin")
+            makePictureMarkerSymbolFromImage(x: user.imageLocation?.coordinate.longitude ?? -117.195686, y: user.imageLocation?.coordinate.latitude ?? 34.058955, id: user.id, iconName: "panorama_user_icon")
         }
         graphicsOverlay.addGraphics(userGraphics)
     }

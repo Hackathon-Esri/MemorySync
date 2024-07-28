@@ -31,6 +31,7 @@ class ARUserPhotoView: UIViewController, ARSCNViewDelegate, CLLocationManagerDel
         setupARScene()
         startLocationServices()
         configureARSession()
+        addFunFacts()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -38,6 +39,21 @@ class ARUserPhotoView: UIViewController, ARSCNViewDelegate, CLLocationManagerDel
         cleanupARResources()
     }
     
+    //this will add fun facts on top screen
+    
+    func addFunFacts() {
+        let funFacts = UIHostingController(rootView: FanFactsView())
+        self.addChild(funFacts)
+        funFacts.view.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(funFacts.view)
+        
+        NSLayoutConstraint.activate([
+            funFacts.view.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            funFacts.view.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+            funFacts.view.topAnchor.constraint(equalTo: self.view.topAnchor), // Changed from bottomAnchor to topAnchor
+            funFacts.view.heightAnchor.constraint(equalToConstant: 200)
+        ])
+    }
     func cleanupARResources() {
         // Pause the AR session
         sceneView.session.pause()

@@ -38,6 +38,7 @@ class ARStreetView: UIViewController, ARSCNViewDelegate, CLLocationManagerDelega
         configureARSession()
         addHorizontalPicker()
         addMapIconButton()
+        addFunFacts()
         self.replaceBuildingWithPhoto(identifier: images.first)
     }
 
@@ -105,6 +106,22 @@ class ARStreetView: UIViewController, ARSCNViewDelegate, CLLocationManagerDelega
         sceneView.delegate = self
         sceneView.session.delegate = self
         sceneView.scene = SCNScene()
+    }
+    
+    //this will add fun facts on top screen
+    
+    func addFunFacts() {
+        let funFacts = UIHostingController(rootView: FanFactsView())
+        self.addChild(funFacts)
+        funFacts.view.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(funFacts.view)
+        
+        NSLayoutConstraint.activate([
+            funFacts.view.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            funFacts.view.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+            funFacts.view.topAnchor.constraint(equalTo: self.view.topAnchor), // Changed from bottomAnchor to topAnchor
+            funFacts.view.heightAnchor.constraint(equalToConstant: 200)
+        ])
     }
     
     func addHorizontalPicker() {
