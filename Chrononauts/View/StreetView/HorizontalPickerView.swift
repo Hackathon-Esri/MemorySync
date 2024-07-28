@@ -8,7 +8,7 @@
 import SwiftUI
 struct HorizontalPickerView: View {
     var images: [PanoImages]
-    var onImageSelected: (PanoImages?) -> Void
+    var onImageSelected: (Int?) -> Void
     
     @State private var selectedIndex: Int?
     @State private var scrollViewProxy: ScrollViewProxy?
@@ -34,7 +34,7 @@ struct HorizontalPickerView: View {
 //                                        onImageSelected(nil) // Notify that no image is selected
                                     } else {
                                         selectedIndex = index
-                                        onImageSelected(images[index])
+                                        onImageSelected(selectedIndex)
                                     }
                                     scrollToSelectedIndex(proxy: proxy)
                                 }
