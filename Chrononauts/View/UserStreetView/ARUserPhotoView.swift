@@ -73,7 +73,7 @@ class ARUserPhotoView: UIViewController, ARSCNViewDelegate, CLLocationManagerDel
                   let mirroredImage = self.mirrorImage(originalImage) else { return }
 
             DispatchQueue.main.async {
-                let sphere = SCNSphere(radius: 10)
+                let sphere = SCNTube(innerRadius: 199, outerRadius: 200, height: 300)
                 let sphereMaterial = SCNMaterial()
                 sphereMaterial.diffuse.contents = mirroredImage
                 sphereMaterial.isDoubleSided = true
